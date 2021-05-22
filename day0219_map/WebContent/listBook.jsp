@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>도서목록</h2>
+	<h2>도서목록11</h2>
 	<a href="insertBook.do">도서등록</a>
 	<table border="1" width="80%">
 		<tr>
