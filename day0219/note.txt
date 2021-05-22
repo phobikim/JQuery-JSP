@@ -1,0 +1,86 @@
+- MVC 패턴을 적용하여 도서관리 시스템 구현 작업 계획 세우기
+
+
+
+														Model에서 하는일 : 	process를 보여주기 : 	View			
+
+기능			서비스명			요청방식	Front Controller	Model				process				View(jsp)
+--------------------------------------------------------------------------------------------------------------------
+도서등록		insertBook.do	get		SistController		InsertBookAction						insertBook.jsp
+			insertBookOK.do	post	SistController		InsertBookOKAction	BookDao.insert()	insertBookOK.jsp
+							
+도서목록		listBook.do		get		SistController		ListBookAction		BookDao.findAll()	listBook.jsp
+
+도서상세		detailBook.do	get		SistController		DetailBookAction	BookDao.getBook()	detailBook.jsp
+
+도서수정		updateBook.do	get		SistController		UpdateBookAction	BookDao.getBook()	updateBook.jsp
+			updateBookOK.do	post	SistController		UpdateBookOKAction	BookDao.update()	updateBookOK.jsp
+							
+도서삭제		deleteBook.do	get		SistController		DeleteBookOKAction	BookDao.delete()	deleteBookOK.jsp
+
+--------------------------------------------------------------------------------------------------------------------
+														모든 Model을 SisiAction의 자식으로 한다 ==> 일처리method를 일반화 : Pro()
+														Pro()를 Overriding하도록 한다
+														
+만약, 사용자가 도서 목록을 보기 위해서 
+	listBook.do라고 요청했다면
+	프론트컨트롤러인 SistController는 
+	ListBookAction의 객체를 생성하여
+	BookDao의 findAll()을 호출하는 메소드를 호출해야한다 
+	그 메소드 이름이 list()라고 가정한다
+		
+또, 사용자가 도서를 삭제하기 위해서 
+	deleteBook.do라고 요청했다면
+	프론트컨트롤러인 SistController는 
+	해당 일처리를 위한 DeleteBookOKAction의 객체를 생성하여
+	Dao의 삭제를 요청하는 일처리를 수행하기 위한 메소드를 호출해야한다
+	그 메소드 이름이 delete()라고 가정한다
+		
+여기서, 각각의 일 처리를 수행하기 위한 Action의 method명이 제각각 다르다면, 
+프론트컨트롤러인 SistController가 이것을 제어하기 번거롭다
+
+모든 Action들이 일 처리를 위한 method를 하나로 통일 시키면 좋을 것이다
+따라서, 모든 Action들은 SistAction인터페이스의 자식이 되도록 만든다 (상속)
+
+	interface SistAction{
+		public String pro(){
+	
+		}
+	}
+	
+	위와같이 pro()메소드를 생성한다면
+	모든 Action들은 반드시 pro()라는 메소드를 Overriding해야한다
+	예를 들어, 아래와 같이 한다
+	
+	class ListBookAction implements SistAciont{
+		@Overriding
+		public String pro(){
+		
+		}
+	}
+	
+	class DeleteBookOKAction implements SistAciont{
+		@Overriding
+		public String pro(){
+		
+		}
+	}
+	
+	이처럼, 사용한다면
+	프론트 컨트롤러 SistController가 각각의 Action에 따른
+	동일한 method를 호출할 수 있다
+	
+----------------------------------------------------------------
+jstl 
+	반복문이나 선택문의 Java문법을 대신하는,  
+	JSP에서 사용할 수 있는 표준 태그를 말한다
+	
+el
+	el은 표현언어이다
+	표현식<%= %> 을 대신하여 출력을 위한 용도로 사용한다
+	<%=a%>을 ${a}으로 사용한다
+	
+	
+	
+
+														

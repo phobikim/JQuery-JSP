@@ -1,0 +1,9 @@
+----------사용자가 요청하는 .do 패턴-------------------
+
+insertBook.do 			==> SistController
+	라고 요청 ==> 도서등록			--> insertBook.jsp
+	
+listBook.do 			==> SistController
+	라고 요청 ==> 도서목록			--> listBook.jsp
+	
+

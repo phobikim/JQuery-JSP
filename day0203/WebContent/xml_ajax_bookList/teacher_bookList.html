@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$.ajax({url:"xml_bookList_DB_xstream.jsp", success:function(xml){
+		//항상 코드를 작성할 때, data가 넘어오는지부터 확인하고 작업한다
+		//alert(xml);
+		let book_list = $(xml).find("book");
+		
+		//배열의 크기만큼 반복하는 함수 each()
+		//$.each(배열이름, function(index, item) {})
+		$.each(book_list, function(index, book) {
+			//변수에 bookList의 레코드명으로 검색하여 값을 담는다
+			let no = $(this).find("no").text();
+			let name = $(this).find("name").text();
+			let publisher = $(this).find("publisher").text();
+			let price = $(this).find("price").text();
+			
+			//태그를 생성하고, 담는다
+			let tr = $("<tr></tr>");
+			$("<td></td>").html(no).appendTo(tr);
+			$("<td></td>").html(name).appendTo(tr);
+			$("<td></td>").html(publisher).appendTo(tr);
+			$("<td></td>").html(price).appendTo(tr);
+			
+			//tr에 담은 것을 생성한 tbody에 id로 접근하여 담는다
+			$("#bookList").append(tr);
+		})
+	}})
+})
+</script>
+</head>
+<body>
+		<table class="table table-dark table-hover">
+			<thead>
+				<tr>
+					<td>번호</td>
+					<td>이름</td>
+					<td>출판사</td>
+					<td>가격</td>
+				</tr>
+			</thead>
+			<tbody id="bookList"></tbody>
+		</table>
+</body>
+</html>
